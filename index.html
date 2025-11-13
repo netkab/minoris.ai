@@ -97,6 +97,7 @@
       max-width: 800px;
       margin: 0 auto;
       padding: 5rem 1.5rem;
+      text-align: center;
     }
 
     section:nth-of-type(odd) {
@@ -112,14 +113,15 @@
     ul {
       list-style: none;
       padding: 0;
-      text-align: left;
-      max-width: 600px;
-      margin: 0 auto;
+      margin: 2rem auto 0;
+      display: inline-block; /* centers the list as a block */
+      text-align: left; /* keeps items aligned nicely */
     }
 
     li {
-      padding: 0.6rem 0 0.6rem 1.5rem;
+      padding: 0.6rem 0 0.6rem 1.8rem;
       position: relative;
+      font-size: 1.05rem;
     }
 
     li::before {
@@ -127,6 +129,8 @@
       color: var(--accent);
       position: absolute;
       left: 0;
+      font-size: 1.1rem;
+      line-height: 1.4;
     }
 
     footer {
@@ -148,11 +152,22 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .fade-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* Responsive tweaks */
     @media (max-width: 600px) {
       h1 { font-size: 2.2rem; }
       p { font-size: 1rem; }
       section { padding: 3rem 1rem; }
+      li { font-size: 1rem; }
     }
   </style>
 </head>
@@ -165,7 +180,7 @@
     <a class="cta" href="mailto:hello@minoris.ai">Request Early Access</a>
   </header>
 
-  <section>
+  <section class="fade-on-scroll">
     <h2>Why Minoris.ai?</h2>
     <p>
       Modern fraud and risk infrastructures are fragmented and reactive.
@@ -175,7 +190,7 @@
     </p>
   </section>
 
-  <section>
+  <section class="fade-on-scroll">
     <h2>Key Capabilities</h2>
     <ul>
       <li>🌐 Data ingestion from any vendor or log source</li>
@@ -188,5 +203,22 @@
   <footer>
     © 2025 Minoris.ai — hello@minoris.ai
   </footer>
+
+  <script>
+    // Fade-in on scroll effect
+    const fadeElements = document.querySelectorAll('.fade-on-scroll');
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    fadeElements.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
