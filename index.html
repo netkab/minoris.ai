@@ -4,12 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minoris.ai – Autonomous Risk Intelligence</title>
+  <link rel="icon" type="image/png" href="favicon.ico" />
+  <meta name="description" content="Minoris.ai – Autonomous risk intelligence. Detect, explain, and resolve issues before they become incidents." />
+  <meta property="og:title" content="Minoris.ai – Autonomous Risk Intelligence" />
+  <meta property="og:description" content="Autonomous risk intelligence for modern fraud and risk teams." />
+  <meta property="og:image" content="https://minoris.ai/logo.png" />
+  <meta property="og:url" content="https://minoris.ai" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Redirect www to root domain -->
+  <script>
+    if (window.location.hostname === "www.minoris.ai") {
+      window.location.href = window.location.href.replace("www.", "");
+    }
+  </script>
+
   <style>
     :root {
       --bg: #0b1321;
       --accent: #14e0cf;
       --text: #f5f8fa;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -21,20 +38,24 @@
 
     header {
       text-align: center;
-      padding: 5rem 1rem 4rem;
-      background: linear-gradient(180deg, #0b1321 0%, #141d2e 100%);
+      padding: 6rem 1rem 4rem;
+      background: radial-gradient(circle at 50% 20%, #12203a 0%, #0b1321 80%);
+      animation: fadeIn 1.2s ease-in;
     }
 
     header img {
       width: 96px;
       height: 96px;
       margin-bottom: 1.5rem;
+      transition: transform 0.6s ease;
     }
+    header img:hover { transform: scale(1.05) rotate(2deg); }
 
     h1 {
       font-size: 2.75rem;
       margin-bottom: 1rem;
       color: var(--accent);
+      animation: fadeUp 0.8s ease-in-out;
     }
 
     p {
@@ -53,12 +74,9 @@
       border-radius: 999px;
       font-weight: 600;
       text-decoration: none;
-      transition: background 0.25s ease;
+      transition: all 0.25s ease;
     }
-
-    .cta:hover {
-      background: #46f1e3;
-    }
+    .cta:hover { background: #46f1e3; transform: translateY(-2px); }
 
     section {
       max-width: 800px;
@@ -79,12 +97,10 @@
       max-width: 600px;
       margin: 0 auto;
     }
-
     li {
       padding: 0.4rem 0;
       position: relative;
     }
-
     li::before {
       content: "▸";
       color: var(--accent);
@@ -99,6 +115,15 @@
       font-size: 0.9rem;
       opacity: 0.7;
     }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 
@@ -107,7 +132,10 @@
     <img src="logo.png" alt="Minoris.ai logo" />
     <h1>Minoris.ai</h1>
     <p>Autonomous risk intelligence — detect, explain, and resolve issues before they become incidents.</p>
-    <a class="cta" href="mailto:hello@minoris.ai">Request Early Access</a>
+    <div>
+      <a class="cta" href="mailto:hello@minoris.ai">Request Early Access</a>
+      <a class="cta" href="demo.html" style="margin-left:1rem;background:transparent;border:1px solid var(--accent);color:var(--accent);">View Demo</a>
+    </div>
   </header>
 
   <section>
