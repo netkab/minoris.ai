@@ -6,34 +6,39 @@
   <title>Minoris.ai Demo</title>
   <link rel="icon" type="image/png" href="favicon.ico" />
   <style>
-    html, body {
+    body {
       margin: 0;
-      height: 100%;
+      font-family: "Inter", system-ui, sans-serif;
       background: #0b1321;
       color: #f5f8fa;
-      font-family: "Inter", system-ui, sans-serif;
-    }
-    header {
       text-align: center;
-      padding: 1rem;
-      border-bottom: 1px solid #1e2a3e;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    header a {
-      color: #14e0cf;
-      text-decoration: none;
+    a {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.9rem 2rem;
+      background: #14e0cf;
+      color: #0b1321;
+      border-radius: 999px;
       font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
     }
-    iframe {
-      width: 100%;
-      height: calc(100% - 70px);
-      border: none;
+    a:hover {
+      background: #46f1e3;
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
-  <header>
-    <a href="index.html">← Back to Home</a>
-  </header>
-  <iframe src="https://minorisai.streamlit.app" title="Minoris.ai Demo"></iframe>
+  <h1>Minoris.ai Demo</h1>
+  <p>The live dashboard opens in a new window for the best experience.</p>
+  <a href="https://minoris-ai.streamlit.app" target="_blank" rel="noopener noreferrer">Open Live Demo</a>
+  <a href="index.html" style="margin-top:1rem;color:#14e0cf;text-decoration:none;">← Back to Home</a>
 </body>
 </html>
