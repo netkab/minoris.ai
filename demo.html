@@ -5,40 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minoris.ai Demo</title>
   <link rel="icon" type="image/png" href="favicon.ico" />
+  <meta name="description" content="Minoris.ai live dashboard demo – Autonomous risk intelligence visualization." />
+
   <style>
+    :root {
+      --bg: #0b1321;
+      --accent: #14e0cf;
+      --text: #f5f8fa;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: "Inter", system-ui, sans-serif;
-      background: #0b1321;
-      color: #f5f8fa;
-      text-align: center;
+      background: var(--bg);
+      color: var(--text);
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
       height: 100vh;
     }
-    a {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.9rem 2rem;
-      background: #14e0cf;
-      color: #0b1321;
-      border-radius: 999px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
+
+    header {
+      text-align: center;
+      padding: 1rem;
+      border-bottom: 1px solid #1e2a3e;
     }
-    a:hover {
-      background: #46f1e3;
-      transform: translateY(-2px);
+
+    header a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      display: none; /* hidden until loaded */
+    }
+
+    #loader {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(20,224,207,0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <h1>Minoris.ai Demo</h1>
-  <p>The live dashboard opens in a new window for the best experience.</p>
-  <a href="https://minoris-ai.streamlit.app" target="_blank" rel="noopener noreferrer">Open Live Demo</a>
-  <a href="index.html" style="margin-top:1rem;color:#14e0cf;text-decoration:none;">← Back to Home</a>
+  <header>
+    <a href="index.html">← Back to Home</a>
+  </header>
+
+  <div id="loader">
+    <div class="spinner"></div> Loading demo...
+  </div>
+
+  <iframe 
+    id="demoFrame"
+    src="https://minorisai.streamlit.app/?embed_options=dark_theme"
+    title="Minoris.ai Demo"
+    allowfullscreen
+  ></iframe>
+
+  <script>
+    const frame = document.getElementById('demoFrame');
+    const loader = document.getElementById('loader');
+
+    frame.addEventListener('load', () => {
+      loader.style.display = 'none';
+      frame.style.display = 'block';
+    });
+  </script>
 </body>
 </html>
