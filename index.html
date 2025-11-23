@@ -4,89 +4,146 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minoris.ai – Autonomous Risk Intelligence</title>
+
   <style>
     :root {
       --bg: #0b1321;
+      --bg2: #141d2e;
       --accent: #14e0cf;
       --text: #f5f8fa;
     }
 
+    /* ------------------ Base ------------------ */
+
     body {
       margin: 0;
       font-family: "Inter", system-ui, sans-serif;
-      background: var(--bg);
       color: var(--text);
+      background: radial-gradient(circle at 30% 0%, #162235 0%, #0b1321 50%, #070c15 100%);
       line-height: 1.6;
+      overflow-x: hidden;
     }
+
+    /* Smooth fade-in on scroll */
+    .fade {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ------------------ Header ------------------ */
 
     header {
       text-align: center;
-      padding: 5rem 1rem 4rem;
-      background: linear-gradient(180deg, #0b1321 0%, #141d2e 100%);
+      padding: 6rem 1rem 4.5rem;
+      background: linear-gradient(180deg, #0d1728 0%, #0b1321 60%, #0b132100 100%);
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200%;
+      height: 160px;
+      background: radial-gradient(circle, rgba(20,224,207,0.12), transparent 70%);
+      pointer-events: none;
     }
 
     header img {
-      width: 96px;
-      height: 96px;
-      margin-bottom: 1.5rem;
+      width: 110px;
+      height: 110px;
+      margin-bottom: 1.7rem;
+      filter: drop-shadow(0 0 12px rgba(20,224,207,0.35));
+      transition: transform 0.6s ease;
+    }
+
+    header img:hover {
+      transform: translateY(-3px);
     }
 
     h1 {
-      font-size: 2.75rem;
+      font-size: 2.8rem;
       margin-bottom: 1rem;
-      color: var(--accent);
+      background: linear-gradient(90deg, var(--accent), #6af1e5);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 18px rgba(20,224,207,0.35);
     }
 
     p {
-      max-width: 620px;
+      max-width: 640px;
       margin: 0 auto;
-      opacity: 0.9;
+      opacity: 0.93;
       font-size: 1.1rem;
     }
 
+    /* CTA button with micro-interaction */
     .cta {
       display: inline-block;
-      margin-top: 2rem;
+      margin-top: 2.2rem;
       background: var(--accent);
       color: var(--bg);
-      padding: 0.9rem 2rem;
+      padding: 0.9rem 2.2rem;
       border-radius: 999px;
       font-weight: 600;
       text-decoration: none;
-      transition: background 0.25s ease;
+      transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 0 18px rgba(20,224,207,0.35);
     }
 
     .cta:hover {
-      background: #46f1e3;
+      background: #4ef5e6;
+      transform: translateY(-2px);
+      box-shadow: 0 0 26px rgba(20,224,207,0.55);
     }
+
+    /* ------------------ Sections ------------------ */
 
     section {
       max-width: 800px;
-      margin: 4rem auto;
+      margin: 5rem auto;
       padding: 0 1rem;
+      text-align: center;
     }
 
     h2 {
       color: var(--accent);
-      text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
+      font-size: 1.8rem;
+      text-shadow: 0 0 10px rgba(20,224,207,0.22);
     }
 
-    /* ------------------------------------- */
-    /* CLEAN CENTERED BULLETS (FINAL FIX)    */
-    /* ------------------------------------- */
+    /* Subtle background halo around each section */
+    section::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      height: 200px;
+      background: radial-gradient(circle, rgba(20,224,207,0.08), transparent 70%);
+      z-index: -1;
+    }
+
+    /* ------------------ Bullets ------------------ */
 
     ul {
       list-style: none;
       padding: 0;
-      max-width: 520px;
+      max-width: 540px;
       margin: 0 auto;
       text-align: left;
-      position: relative;
     }
 
     li {
-      padding: 0.4rem 0 0.4rem 1.4rem;
+      padding: 0.45rem 0 0.45rem 1.4rem;
       position: relative;
     }
 
@@ -95,20 +152,27 @@
       color: var(--accent);
       position: absolute;
       left: 0;
+      top: 0.2rem;
+      font-size: 1.1rem;
     }
+
+    /* ------------------ Footer ------------------ */
 
     footer {
       text-align: center;
-      padding: 2rem;
+      padding: 2.2rem;
       border-top: 1px solid #1e2a3e;
       font-size: 0.9rem;
-      opacity: 0.7;
+      opacity: 0.75;
+      margin-top: 5rem;
     }
+
   </style>
 </head>
 
 <body>
-  <header>
+
+  <header class="fade">
     <img src="logo.png" alt="Minoris.ai logo" />
     <h1>Minoris.ai</h1>
     <p>
@@ -119,7 +183,7 @@
     <a class="cta" href="mailto:hello@minoris.ai">Request Early Access</a>
   </header>
 
-  <section>
+  <section class="fade">
     <h2>The new fraud reality</h2>
     <p>
       AI-driven fraud, synthetic identities, and automated abuse are reshaping
@@ -129,7 +193,7 @@
     </p>
   </section>
 
-  <section>
+  <section class="fade">
     <h2>The problem</h2>
     <p>
       Modern risk stacks are fragmented across identity, payments, behavioral
@@ -139,10 +203,30 @@
     </p>
   </section>
 
-  <section>
+  <section class="fade">
     <h2>How Minoris.ai helps</h2>
     <ul>
       <li>Unifies signals from all risk, fraud, and analytics tools</li>
       <li>Continuously detects anomalies and emerging AI-driven patterns</li>
       <li>Explains what is happening and why, in clear narrative form</li>
-      <li>Surfaces the actions that truly matter - before issues escalate
+      <li>Surfaces the actions that truly matter - before issues escalate</li>
+    </ul>
+  </section>
+
+  <footer class="fade">
+    © 2025 Minoris.ai — hello@minoris.ai
+  </footer>
+
+  <!-- Fade-in trigger -->
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
