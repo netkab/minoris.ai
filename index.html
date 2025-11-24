@@ -334,9 +334,9 @@
                     <h3 class="text-lg font-bold text-white mb-2">Explainable Narratives</h3>
                     <div class="flex-1 bg-slate-900 rounded border border-slate-800 p-3 mt-2 font-mono text-xs text-slate-300 overflow-hidden relative">
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/90"></div>
-                        <p class="text-primary-400 mb-1">> Analyzing transaction...</p>
-                        <p class="mb-1">Risk Score: 85/100</p>
-                        <p class="text-slate-500">Reason: Device ID mismatch combined with velocity spike in region US-EAST.</p>
+                        <p class="text-primary-400 mb-1">> Detecting Early Risk</p>
+                        <p class="mb-1">Agentic Traffic Spike (UK)</p>
+                        <p class="text-slate-500">38% of UK checkout sessions now show sub-second page transitions and zero hesitation time on product pages.</p>
                     </div>
                 </div>
 
@@ -366,21 +366,11 @@
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Stay ahead of fraud.</h2>
             <p class="text-xl text-slate-400 mb-10">We're partnering with select design partners. Join the Early Access Program today.</p>
             
-            <form class="max-w-md mx-auto space-y-4 text-left" onsubmit="event.preventDefault(); alert('Thank you! This is a demo form.');">
-                <div>
-                    <label for="email" class="sr-only">Work Email</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="mail" class="h-5 w-5 text-slate-500"></i>
-                        </div>
-                        <input type="email" name="email" id="email" class="block w-full pl-10 pr-3 py-4 border border-slate-700 rounded-lg leading-5 bg-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all" placeholder="Enter your work email">
-                    </div>
-                </div>
-                <button type="submit" class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-500 hover:to-indigo-500 md:text-lg transition-all shadow-lg hover:shadow-primary-500/25">
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <a href="mailto:hello@minoris.ai?subject=Interested%20in%20early%20access" class="w-full sm:w-auto flex items-center justify-center px-12 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-500 hover:to-indigo-500 md:text-lg transition-all shadow-lg hover:shadow-primary-500/25">
                     Join Early Access
-                </button>
-                <p class="text-xs text-center text-slate-500 mt-4">Limited spots available for Q4 2025.</p>
-            </form>
+                </a>
+            </div>
         </div>
     </section>
 
