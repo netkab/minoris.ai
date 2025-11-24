@@ -1,232 +1,519 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minoris.ai – Autonomous Risk Intelligence</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minoris.ai | Agentic Risk Platform</title>
+    
+    <!-- Fonts: Inter for main text, JetBrains Mono for code/data -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-  <style>
-    :root {
-      --bg: #0b1321;
-      --bg2: #141d2e;
-      --accent: #14e0cf;
-      --text: #f5f8fa;
-    }
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        primary: {
+                            400: '#38bdf8', // Sky blue/Cyan
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        },
+                        accent: {
+                            light: '#a5f3fc', // Cyan 200
+                            DEFAULT: '#06b6d4', // Cyan 500
+                            glow: 'rgba(6, 182, 212, 0.5)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'scan': 'scan 4s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        scan: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
-    /* ------------------ Base ------------------ */
+    <style>
+        /* Custom Utilities */
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        /* Grid Background Pattern */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
 
-    body {
-      margin: 0;
-      font-family: "Inter", system-ui, sans-serif;
-      color: var(--text);
-      background: radial-gradient(circle at 30% 0%, #162235 0%, #0b1321 50%, #070c15 100%);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+        /* Glow Effects */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+        
+        .glow-box {
+            box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .glow-box:hover {
+            box-shadow: 0 0 60px -10px rgba(6, 182, 212, 0.3);
+            border-color: rgba(56, 189, 248, 0.5);
+        }
 
-    /* Smooth fade-in on scroll */
-    .fade {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.9s ease, transform 0.9s ease;
-    }
-    .fade.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+        /* Scroll Reveal Class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    /* ------------------ Header ------------------ */
-
-    header {
-      text-align: center;
-      padding: 6rem 1rem 4.5rem;
-      background: linear-gradient(180deg, #0d1728 0%, #0b1321 60%, #0b132100 100%);
-      position: relative;
-    }
-
-    header::after {
-      content: "";
-      position: absolute;
-      bottom: -60px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200%;
-      height: 160px;
-      background: radial-gradient(circle, rgba(20,224,207,0.12), transparent 70%);
-      pointer-events: none;
-    }
-
-    header img {
-      width: 110px;
-      height: 110px;
-      margin-bottom: 1.7rem;
-      filter: drop-shadow(0 0 12px rgba(20,224,207,0.35));
-      transition: transform 0.6s ease;
-    }
-
-    header img:hover {
-      transform: translateY(-3px);
-    }
-
-    h1 {
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(90deg, var(--accent), #6af1e5);
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 18px rgba(20,224,207,0.35);
-    }
-
-    p {
-      max-width: 640px;
-      margin: 0 auto;
-      opacity: 0.93;
-      font-size: 1.1rem;
-    }
-
-    /* CTA button with micro-interaction */
-    .cta {
-      display: inline-block;
-      margin-top: 2.2rem;
-      background: var(--accent);
-      color: var(--bg);
-      padding: 0.9rem 2.2rem;
-      border-radius: 999px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-      box-shadow: 0 0 18px rgba(20,224,207,0.35);
-    }
-
-    .cta:hover {
-      background: #4ef5e6;
-      transform: translateY(-2px);
-      box-shadow: 0 0 26px rgba(20,224,207,0.55);
-    }
-
-    /* ------------------ Sections ------------------ */
-
-    section {
-      max-width: 800px;
-      margin: 5rem auto;
-      padding: 0 1rem;
-      text-align: center;
-    }
-
-    h2 {
-      color: var(--accent);
-      margin-bottom: 1.2rem;
-      font-size: 1.8rem;
-      text-shadow: 0 0 10px rgba(20,224,207,0.22);
-    }
-
-    /* Subtle background halo around each section */
-    section::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      height: 200px;
-      background: radial-gradient(circle, rgba(20,224,207,0.08), transparent 70%);
-      z-index: -1;
-    }
-
-    /* ------------------ Bullets ------------------ */
-
-    ul {
-      list-style: none;
-      padding: 0;
-      max-width: 540px;
-      margin: 0 auto;
-      text-align: left;
-    }
-
-    li {
-      padding: 0.45rem 0 0.45rem 1.4rem;
-      position: relative;
-    }
-
-    li::before {
-      content: "▸";
-      color: var(--accent);
-      position: absolute;
-      left: 0;
-      top: 0.2rem;
-      font-size: 1.1rem;
-    }
-
-    /* ------------------ Footer ------------------ */
-
-    footer {
-      text-align: center;
-      padding: 2.2rem;
-      border-top: 1px solid #1e2a3e;
-      font-size: 0.9rem;
-      opacity: 0.75;
-      margin-top: 5rem;
-    }
-
-  </style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
 </head>
+<body class="antialiased">
 
-<body>
+    <!-- Background Canvas for Network Animation -->
+    <canvas id="networkCanvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-40"></canvas>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 border-b border-transparent" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 backdrop-blur-md bg-slate-900/70">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 group cursor-pointer">
+                    <img src="logo.png" alt="Minoris.ai Logo" class="w-8 h-8">
+                    <span class="text-xl font-bold tracking-tight text-white">Minoris<span class="text-primary-400">.ai</span></span>
+                </div>
 
-  <header class="fade">
-    <img src="logo.png" alt="Minoris.ai logo" />
-    <h1>Minoris.ai</h1>
-    <p>
-      Fraud and abuse are evolving faster than traditional tools can react.
-      Minoris.ai provides a unified, autonomous risk intelligence layer that
-      detects emerging patterns early - and brings clarity to fragmented signals.
-    </p>
-    <a class="cta" href="mailto:hello@minoris.ai">Request Early Access</a>
-  </header>
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#why" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Why Minoris</a>
+                        <a href="#how" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">How it Works</a>
+                        <a href="#capabilities" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Capabilities</a>
+                    </div>
+                </div>
 
-  <section class="fade">
-    <h2>The new fraud reality</h2>
-    <p>
-      AI-driven fraud, synthetic identities, and automated abuse are reshaping
-      the threat landscape. Yet most companies still operate with siloed tools
-      that produce conflicting signals and blind spots. The challenge is no
-      longer data volume - it's alignment.
-    </p>
-  </section>
+                <!-- Mobile Menu Button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-  <section class="fade">
-    <h2>The problem</h2>
-    <p>
-      Modern risk stacks are fragmented across identity, payments, behavioral
-      analytics, vendors, and internal models. Without a cohesive narrative,
-      teams miss early warning signs and struggle to separate true risk from
-      normal activity.
-    </p>
-  </section>
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden bg-slate-900 border-b border-slate-800" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#why" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Why Minoris</a>
+                <a href="#how" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">How it Works</a>
+                <a href="#capabilities" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Capabilities</a>
+                <a href="#contact" class="block px-3 py-2 mt-4 text-center rounded-md text-base font-bold bg-primary-600 text-white shadow-lg">Request Early Access</a>
+            </div>
+        </div>
+    </nav>
 
-  <section class="fade">
-    <h2>How Minoris.ai helps</h2>
-    <ul>
-      <li>Unifies signals from all risk, fraud, and analytics tools</li>
-      <li>Continuously detects anomalies and emerging AI-driven patterns</li>
-      <li>Explains what is happening and why, in clear narrative form</li>
-      <li>Surfaces the actions that truly matter - before issues escalate</li>
-    </ul>
-  </section>
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-grid">
+        <!-- Radiant Gradient Behind -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary-600/10 blur-[100px] rounded-full -z-10 pointer-events-none"></div>
 
-  <footer class="fade">
-    © 2025 Minoris.ai — hello@minoris.ai
-  </footer>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            
+            <h1 class="reveal text-5xl md:text-7xl font-bold tracking-tight text-white mb-6">
+                Agentic <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-indigo-400 glow-text">Risk Platform</span>
+            </h1>
+            
+            <p class="reveal mt-4 max-w-2xl mx-auto text-xl text-slate-400 leading-relaxed">
+                Detect, explain, and resolve issues before they become incidents. 
+                Unify signals and stay ahead of fraud with explainable AI.
+            </p>
 
-  <!-- Fade-in trigger -->
-  <script>
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('visible');
-      });
-    }, { threshold: 0.15 });
+            <div class="reveal mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#contact" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-500 transition-all shadow-[0_0_30px_-5px_rgba(14,165,233,0.4)] hover:scale-105">
+                    Request Early Access
+                </a>
+                <a href="#how" class="inline-flex items-center justify-center px-8 py-4 border border-slate-700 text-base font-medium rounded-lg text-slate-300 bg-slate-900/50 hover:bg-slate-800 hover:text-white transition-all backdrop-blur-sm">
+                    View Capabilities
+                </a>
+            </div>
+        </div>
+    </section>
 
-    document.querySelectorAll('.fade').forEach(el => observer.observe(el));
-  </script>
+    <!-- Problem / Why Section -->
+    <section id="why" class="py-24 bg-slate-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Why Minoris?</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Modern fraud infrastructures are fragmented and reactive. We fix the broken feedback loop.</p>
+            </div>
 
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="reveal p-8 rounded-2xl bg-slate-850 border border-slate-800 hover:border-primary-500/30 transition-all glow-box group">
+                    <div class="w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="shield-alert" class="text-red-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">The Problem</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Teams are drowning in false positives. Alerts are vague, context is missing, and responses are manual and slow.
+                    </p>
+                </div>
+
+                <!-- Card 2 (Center/Highlight) -->
+                <div class="reveal p-8 rounded-2xl bg-slate-800/80 border border-primary-500/20 hover:border-primary-500/50 transition-all glow-box relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-primary-500/10 blur-2xl rounded-full group-hover:bg-primary-500/20 transition-colors"></div>
+                    <div class="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="zap" class="text-primary-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">The Minoris Solution</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Minoris unifies signals, continuously detects anomalies, and provides <span class="text-primary-400 font-medium">actionable narratives</span>, not just logs.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="reveal p-8 rounded-2xl bg-slate-850 border border-slate-800 hover:border-primary-500/30 transition-all glow-box group">
+                    <div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="target" class="text-emerald-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">The Outcome</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Your team stops chasing ghosts and focuses on what truly matters: resolving actual threats and staying ahead of fraud.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works (Horizontal Flow) -->
+    <section id="how" class="py-24 bg-slate-950 relative overflow-hidden">
+        <!-- Decorative line -->
+        <div class="absolute top-1/2 left-0 w-full h-px bg-slate-800 hidden md:block -translate-y-1/2"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">How It Works</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12 text-center">
+                
+                <!-- Step 1 -->
+                <div class="reveal group relative bg-slate-950 md:bg-transparent p-4 md:p-0 rounded-xl border border-slate-800 md:border-none">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-slate-900 border-2 border-slate-700 flex items-center justify-center mb-6 z-10 relative group-hover:border-primary-500 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300">
+                        <i data-lucide="database" class="text-slate-400 group-hover:text-white w-8 h-8 transition-colors"></i>
+                        <!-- Dot on line -->
+                        <div class="absolute top-1/2 -right-8 w-4 h-4 bg-slate-800 rounded-full hidden md:block -translate-y-1/2"></div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">1. Ingest</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Connects seamlessly to your vendors, internal models, and diverse log sources.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="reveal delay-100 group relative bg-slate-950 md:bg-transparent p-4 md:p-0 rounded-xl border border-slate-800 md:border-none">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-slate-900 border-2 border-slate-700 flex items-center justify-center mb-6 z-10 relative group-hover:border-primary-500 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300">
+                        <i data-lucide="scan-search" class="text-slate-400 group-hover:text-white w-8 h-8 transition-colors"></i>
+                        <!-- Dots on line -->
+                        <div class="absolute top-1/2 -left-8 w-4 h-4 bg-slate-800 rounded-full hidden md:block -translate-y-1/2"></div>
+                        <div class="absolute top-1/2 -right-8 w-4 h-4 bg-slate-800 rounded-full hidden md:block -translate-y-1/2"></div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">2. Analyze</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">AI detects weak-signal anomalies across risk layers using behavioral patterns.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="reveal delay-200 group relative bg-slate-950 md:bg-transparent p-4 md:p-0 rounded-xl border border-slate-800 md:border-none">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-slate-900 border-2 border-slate-700 flex items-center justify-center mb-6 z-10 relative group-hover:border-primary-500 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300">
+                        <i data-lucide="check-circle-2" class="text-slate-400 group-hover:text-white w-8 h-8 transition-colors"></i>
+                        <!-- Dot on line -->
+                        <div class="absolute top-1/2 -left-8 w-4 h-4 bg-slate-800 rounded-full hidden md:block -translate-y-1/2"></div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">3. Act</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Suggests playbooks or triggers automated mitigations instantly.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities Bento Grid -->
+    <section id="capabilities" class="py-24 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Intelligence Capabilities</h2>
+                <p class="text-slate-400">Built for modern risk teams.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-6 h-auto md:h-[600px]">
+                
+                <!-- Card 1: Large Graph Visual -->
+                <div class="reveal md:col-span-2 md:row-span-2 bg-slate-850 rounded-2xl border border-slate-800 p-6 relative overflow-hidden group hover:border-primary-500/30 transition-all">
+                    <div class="absolute top-6 right-6 z-10">
+                        <div class="px-3 py-1 bg-red-500/20 text-red-400 rounded text-xs font-mono flex items-center gap-2">
+                            <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span> ANOMALY DETECTED
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-white mb-2">Continuous Anomaly Detection</h3>
+                    <p class="text-slate-400 mb-8 max-w-md">Real-time monitoring of data streams to identify weak signals before they become major incidents.</p>
+                    
+                    <!-- CSS Graph Visualization -->
+                    <div class="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-slate-900/90 to-transparent z-20"></div>
+                    <div class="w-full h-48 flex items-end gap-1 px-6 opacity-60 group-hover:opacity-80 transition-opacity">
+                        <!-- Simulated Bars -->
+                        <div class="w-full bg-slate-700 h-[20%] rounded-t"></div>
+                        <div class="w-full bg-slate-700 h-[35%] rounded-t"></div>
+                        <div class="w-full bg-slate-700 h-[25%] rounded-t"></div>
+                        <div class="w-full bg-slate-700 h-[45%] rounded-t"></div>
+                        <div class="w-full bg-slate-700 h-[30%] rounded-t"></div>
+                        <div class="w-full bg-slate-700 h-[20%] rounded-t"></div>
+                        <!-- The Anomaly -->
+                        <div class="w-full bg-red-500 h-[90%] rounded-t relative shadow-[0_0_20px_rgba(239,68,68,0.5)]"></div>
+                        <div class="w-full bg-slate-700 h-[40%] rounded-t"></div>
+                        <div class="w-full bg-slate-700 h-[25%] rounded-t"></div>
+                        <div class="w-full bg-slate-700 h-[30%] rounded-t"></div>
+                    </div>
+                </div>
+
+                <!-- Card 2: AI Narratives -->
+                <div class="reveal bg-slate-850 rounded-2xl border border-slate-800 p-6 flex flex-col hover:border-primary-500/30 transition-all group">
+                    <div class="w-10 h-10 rounded bg-indigo-500/20 flex items-center justify-center mb-4">
+                        <i data-lucide="message-square-text" class="text-indigo-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Explainable Narratives</h3>
+                    <div class="flex-1 bg-slate-900 rounded border border-slate-800 p-3 mt-2 font-mono text-xs text-slate-300 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/90"></div>
+                        <p class="text-primary-400 mb-1">> Analyzing transaction...</p>
+                        <p class="mb-1">Risk Score: 85/100</p>
+                        <p class="text-slate-500">Reason: Device ID mismatch combined with velocity spike in region US-EAST.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Integrations -->
+                <div class="reveal bg-slate-850 rounded-2xl border border-slate-800 p-6 hover:border-primary-500/30 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded bg-emerald-500/20 flex items-center justify-center mb-4">
+                            <i data-lucide="link" class="text-emerald-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Universal Ingestion</h3>
+                        <p class="text-slate-400 text-sm mt-2">Logs, APIs, or Vendors.</p>
+                    </div>
+                    <div class="flex gap-3 mt-4 opacity-50 grayscale group-hover:grayscale-0 transition-all">
+                        <div class="w-8 h-8 bg-slate-700 rounded-full"></div>
+                        <div class="w-8 h-8 bg-slate-700 rounded-full"></div>
+                        <div class="w-8 h-8 bg-slate-700 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / CTA Section -->
+    <section id="contact" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950"></div>
+        <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Stay ahead of fraud.</h2>
+            <p class="text-xl text-slate-400 mb-10">We're partnering with select design partners. Join the Early Access Program today.</p>
+            
+            <form class="max-w-md mx-auto space-y-4 text-left" onsubmit="event.preventDefault(); alert('Thank you! This is a demo form.');">
+                <div>
+                    <label for="email" class="sr-only">Work Email</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="mail" class="h-5 w-5 text-slate-500"></i>
+                        </div>
+                        <input type="email" name="email" id="email" class="block w-full pl-10 pr-3 py-4 border border-slate-700 rounded-lg leading-5 bg-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all" placeholder="Enter your work email">
+                    </div>
+                </div>
+                <button type="submit" class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-lg text-white bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-500 hover:to-indigo-500 md:text-lg transition-all shadow-lg hover:shadow-primary-500/25">
+                    Join Early Access
+                </button>
+                <p class="text-xs text-center text-slate-500 mt-4">Limited spots available for Q4 2025.</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <span class="text-lg font-bold text-white">Minoris<span class="text-primary-500">.ai</span></span>
+                <p class="text-slate-500 text-sm mt-1">Agentic Risk Platform</p>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="text-slate-500 hover:text-white transition-colors">Twitter</a>
+                <a href="#" class="text-slate-500 hover:text-white transition-colors">LinkedIn</a>
+                <a href="mailto:hello@minoris.ai" class="text-slate-500 hover:text-white transition-colors">hello@minoris.ai</a>
+            </div>
+            <div class="mt-4 md:mt-0 text-slate-600 text-sm">
+                &copy; 2025 Minoris.ai. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar Glass Effect on Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-lg', 'bg-slate-900/90');
+            } else {
+                navbar.classList.remove('shadow-lg', 'bg-slate-900/90');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Optional: Stop observing once revealed
+                    // revealObserver.unobserve(entry.target); 
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Background Network Animation (Canvas)
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.3)'; // Sky-400 with low opacity
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(window.innerWidth / 10, 100); // Responsive count
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        initParticles();
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+                
+                // Draw connections
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${0.1 - distance/1500})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+    </script>
 </body>
 </html>
